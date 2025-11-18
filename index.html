@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Force viewport to fixed size for the tablet -->
+    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0">
+    <title>Tablet Clock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Info display area (datetime and weather) -->
+    <div id="info">
+        <div id="datetime" class="size-big">
+            <span id="clock">0:00</span>
+            <span style="display: block; width: 0.3em;"></span> <!-- Spacer -->
+            <div id="date-info" class="size-small">
+                <span id="daydate" class="size-medium">--</span>
+                <span style="display: block; height: 0.5em;"></span> <!-- Spacer -->
+                <span id="dotw">---</span>
+            </div>
+        </div>
+        <span style="display: block; height: 14vh;"></span>
+        <div id="weather" class="size-medium">
+            <div id="weather-now">
+                <div id="weather-icon-now" class="weather-icon"></div>
+                <span style="display: block; width: 0.15em;"></span> <!-- Spacer -->
+                <span id="weather-temp-now">00°</span>
+            </div>
+            <span style="display: block; width: 0.4em;"></span> <!-- Spacer -->
+            <div id="weather-next" class="size-small">
+            </div>
+        </div>
+    </div>
+    <!-- Black overlay for transitions -->
+    <div id="overlay"></div>
+    <!-- Semi-transparent overlay -->
+    <div id="tint"></div>
+    <!-- Background image holder -->
+    <div id="background"></div>
+    <!-- Visible button for fullscreen -->
+    <!-- Controls container -->
+    <button id="toggle-fullscreen" class="invisible-button"></button> <!-- Updated ID, text removed -->
+    <button id="refresh-background" class="invisible-button"></button>
+
+    <!-- Libraries -->
+    <script src="Vibrant.min.js"></script> <!-- Replaced color.js with Vibrant.js -->
+
+    <!-- App Scripts -->
+    <script src="background.js"></script> <!-- Contains prepareBackground and swapBackground -->
+    <script src="weather.js"></script> <!-- Weather fetching logic -->
+    <script src="script.js"></script> <!-- Main application logic -->
+</body>
+
+</html>

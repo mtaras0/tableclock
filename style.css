@@ -1,0 +1,278 @@
+@font-face {
+    font-family: 'InterDisplay';
+    src: url('fonts/InterDisplay-Regular.woff2') format('woff2');
+    font-weight: 400;
+    /* Regular */
+    font-style: normal;
+}
+
+/* @font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+} */
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-Medium.woff2') format('woff2');
+    font-weight: 500;
+    /* Medium */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    /* SemiBold */
+    font-style: normal;
+}
+
+/* @font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+} */
+
+:root {
+    --tint-color: black;
+    --accent-color: hsl(50, 100%, 85%);
+    --text-color: white;
+    --rain-color: #7FFFFF;
+    white-space: nowrap !important;
+}
+
+body {
+    margin: auto;
+    padding: 0;
+    background-color: black;
+    /* Background behind rounded corners */
+    width: 160vh;
+    /* Use viewport width */
+    height: 100vh;
+    /* Use viewport height */
+    overflow: hidden;
+    /* Prevent scrollbars */
+    position: relative;
+    /* Context for absolute positioning */
+}
+
+/* Shared styles for background and tint layers */
+#background,
+#tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Fill parent (body) */
+    height: 100%;
+    /* Fill parent (body) */
+    border-radius: 8vh;
+    /* 50px / 800px height = 6.25% */
+    overflow: hidden;
+    /* Clip contents to rounded corners */
+    box-sizing: border-box;
+    /* Include border/padding in size */
+}
+
+#background {
+    z-index: 1;
+    /* Bottom layer */
+    background-color: black;
+    /* Dark placeholder if image fails or during loading */
+    background-size: cover;
+    /* Scale the image to cover the entire div */
+    background-position: center;
+    /* Center the image within the div */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+}
+
+#tint {
+    z-index: 2;
+    /* Middle layer */
+    /* width: 50%;
+    height: 50%; */
+    background-color: var(--tint-color);
+    opacity: 0.5;
+    /* For older browsers that might not support rgba or opacity well */
+    /* filter: alpha(opacity=50); */
+    /* IE8 */
+}
+
+#info {
+    position: absolute;
+    top: 50%;
+    /* Adjust vertical centering for column layout */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    /* Ensure info is above overlay */
+    display: flex;
+    flex-direction: column;
+    /* Stack datetime and weather vertically */
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+#datetime {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#weather {
+    /* Add any specific container styles for weather if needed */
+    color: var(--text-color);
+    /* Match date text color */
+    flex-direction: row;
+    display: flex;
+    /* Use flexbox to align icon and temp */
+    align-items: center;
+    /* Vertically center items */
+    justify-content: center;
+    /* Horizontally center items */
+}
+
+#weather-now {
+    /* Styles for the current weather block */
+    display: flex;
+    /* Use flexbox to align icon and temp */
+    align-items: center;
+    /* Vertically center items */
+    justify-content: center;
+    /* Horizontally center items */
+}
+
+.weather-icon {
+    /* Container for the icon */
+    /* Width will be determined by the image content */
+    height: 0.85em;
+    /* Desired height */
+    /* width: auto; Auto width to maintain aspect ratio */
+    /* display: flex; Center the image inside */
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+
+.weather-icon img {
+    height: 100%;
+    /* Make image height match container height */
+    width: auto;
+    /* Calculate width proportionally */
+    display: block;
+    /* Optional, removes tiny space sometimes seen below images */
+}
+
+.arrow-symbol {
+    font-size: 120%;
+    line-height: 0.6em;
+}
+
+.rain-change-symbol {
+    color: var(--rain-color);
+}
+
+#clock,
+#weather-interval-time {
+    color: var(--accent-color);
+}
+
+#date-info,
+#weather-interval {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    justify-content: center;
+    align-items: center;
+    /* gap: 6vh; */
+}
+
+#tint {
+    background-color: var(--tint-color);
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    /* Start fully transparent */
+    z-index: 4;
+    /* z-indexes: */
+    /* background: 1 */
+    /* tint: 2 */
+    /* info: 3 */
+    /* overlay: 4 */
+    /* controls: 5 */
+    transition: opacity 1s ease-in-out;
+    /* Transition for fade effect (1s) */
+    pointer-events: none;
+    /* Allow clicks to pass through when transparent */
+}
+
+/* Style for the fullscreen toggle button */
+.invisible-button {
+    position: absolute;
+    z-index: 10;
+    width: 20vh;
+    height: 20vh;
+    background-color: #eee;
+    margin: 0;
+    cursor: pointer;
+    outline: none;
+    opacity: 0;
+    pointer-events: auto;
+}
+
+#toggle-fullscreen {
+    top: 0px;
+    left: 0px;
+}
+
+#refresh-background {
+    top: 0px;
+    right: 0px;
+}
+
+.size-big {
+    font-family: 'InterDisplay', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 32.725vh;
+    line-height: 0.75em;
+}
+
+.size-medium {
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 20.225vh;
+    line-height: 0.75em;
+}
+
+.size-small {
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 12.5vh;
+    line-height: 0.75em;
+}
+
+/* .size-tiny {
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 700; 
+    font-size: 6.25vh;
+    line-height: 0.75em;
+} */
+
+.night-tint {
+    filter: brightness(0.11) sepia(1) hue-rotate(-45deg) saturate(600%);
+}
