@@ -240,6 +240,15 @@ function toCssColor(colorValue) {
 
 // --- Background Swapping with Transition & Color Application ---
 function swapBackground() {
+    // Force night mode if current time is night, overriding any preloaded day state
+    if (isNightTime(new Date())) {
+        console.log("Forcing night mode during swap due to current time.");
+        nextBackgroundUrl = null;
+        nextTintColor = 'black'; // Use string for black background tint
+        nextAccentColor = [20, 1.0, 0.25]; // HSL(20, 100%, 25%) - Dark Red/Brownish
+        nextTextColor = [20, 1.0, 0.15]; // HSL(20, 100%, 15%) - Very Dark Red/Brownish
+    }
+
     console.log("Starting background swap using prepared state:", { nextBackgroundUrl, nextTintColor, nextAccentColor, nextTextColor });
     const overlayElement = document.getElementById('overlay');
     const backgroundDiv = document.getElementById('background'); // Get the background div itself
