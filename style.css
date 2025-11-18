@@ -41,6 +41,7 @@
     --accent-color: hsl(50, 100%, 85%);
     --text-color: white;
     --rain-color: #7FFFFF;
+    --base-size: min(1vh, 0.625vw);
     white-space: nowrap !important;
 }
 
@@ -48,11 +49,11 @@ body {
     margin: auto;
     padding: 0;
     background-color: black;
-    /* Background behind rounded corners */
-    width: 160vh;
-    /* Use viewport width */
+    /* width: calc(var(--base-size) * 160); */
+    /* height: calc(var(--base-size) * 100); */
+    width: 100vw;
     height: 100vh;
-    /* Use viewport height */
+
     overflow: hidden;
     /* Prevent scrollbars */
     position: relative;
@@ -69,7 +70,7 @@ body {
     /* Fill parent (body) */
     height: 100%;
     /* Fill parent (body) */
-    border-radius: 8vh;
+    border-radius: calc(var(--base-size) * 8);
     /* 50px / 800px height = 6.25% */
     overflow: hidden;
     /* Clip contents to rounded corners */
@@ -120,6 +121,11 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+#vertical-spacer {
+    display: block;
+    height: calc(var(--base-size) * 14);
 }
 
 #datetime {
@@ -225,8 +231,8 @@ body {
 .invisible-button {
     position: absolute;
     z-index: 10;
-    width: 20vh;
-    height: 20vh;
+    width: calc(var(--base-size) * 20);
+    height: calc(var(--base-size) * 20);
     background-color: #eee;
     margin: 0;
     cursor: pointer;
@@ -248,21 +254,21 @@ body {
 .size-big {
     font-family: 'InterDisplay', Arial, sans-serif;
     font-weight: 400;
-    font-size: 32.725vh;
+    font-size: calc(var(--base-size) * 32.725);
     line-height: 0.75em;
 }
 
 .size-medium {
     font-family: 'Inter', Arial, sans-serif;
     font-weight: 500;
-    font-size: 20.225vh;
+    font-size: calc(var(--base-size) * 20.225);
     line-height: 0.75em;
 }
 
 .size-small {
     font-family: 'Inter', Arial, sans-serif;
     font-weight: 600;
-    font-size: 12.5vh;
+    font-size: calc(var(--base-size) * 12.5);
     line-height: 0.75em;
 }
 
