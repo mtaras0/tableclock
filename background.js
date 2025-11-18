@@ -292,19 +292,7 @@ function swapBackground() {
         console.log("--rain-color:", cssRainColor);
         document.documentElement.style.setProperty('--rain-color', cssRainColor);
 
-        // 4. Add/Remove night-tint class to weather icon
-        const weatherIconNowElement = document.getElementById('weather-icon-now');
-        const weatherIconNextElement = document.getElementById('weather-icon-next');
-
-        if (nextBackgroundUrl === null) { // Night mode condition
-            console.log("Applying night-tint to weather icon.");
-            weatherIconNowElement.classList.add('night-tint');
-            // weatherIconNextElement.classList.add('night-tint');
-        } else { // Day mode condition
-            console.log("Removing night-tint from weather icon.");
-            weatherIconNowElement.classList.remove('night-tint');
-            // weatherIconNextElement.classList.remove('night-tint');
-        }
+        // 4. Add/Remove night-tint class to weather icon (handled by updateWeather)
 
 
         // 5. Update Current Global Colors to Match Applied State
@@ -313,6 +301,11 @@ function swapBackground() {
         finalAccentColor = Array.isArray(nextAccentColor) ? [...nextAccentColor] : nextAccentColor;
         finalTextColor = Array.isArray(nextTextColor) ? [...nextTextColor] : nextTextColor;
         console.log("Updated final colors to match applied state:", { finalTintColor, finalAccentColor, finalTextColor });
+
+        // 6. Trigger weather update to apply new theme to icons
+        if (typeof updateWeather === 'function') {
+            updateWeather();
+        }
 
 
         // --- Fade In (Reveal New Background and Colors) ---

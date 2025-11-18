@@ -236,10 +236,12 @@
         // Initial time update on load
         updateTime();
 
-        // Initial weather update
+        // Start the initial background load and schedule periodic updates.
+        // This process will trigger the first weather update via swapBackground().
+        initialBackgroundLoadAndSchedule();
+
+        // Set up periodic weather updates
         if (typeof updateWeather === 'function') {
-            console.log('updateWeather function found. Starting initial update...');
-            updateWeather();
             // Update weather every 5 minutes (300000 milliseconds)
             setInterval(updateWeather, 300000);
         } else {
@@ -259,9 +261,6 @@
         } else if (refreshbgButton.attachEvent) { // Fallback for older IE
             refreshbgButton.attachEvent('onclick', refreshBackground);
         }
-
-        // Start the initial background load and schedule periodic updates
-        initialBackgroundLoadAndSchedule(); // Call the new function
     }
 
     // Run initialization when the DOM is ready (basic check)
