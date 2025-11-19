@@ -41,8 +41,30 @@
     --accent-color: hsl(50, 100%, 85%);
     --text-color: white;
     --rain-color: #7FFFFF;
-    --base-size: min(1vh, 0.625vw);
+
+    /* Fallback for very old browsers (defaults to height-based) */
+    --base-size: 1vh;
+
     white-space: nowrap !important;
+}
+
+/* 
+   Logic replacement for min(1vh, 0.625vw) 
+   0.625 is the inverse of 1.6 (16:10 aspect ratio)
+*/
+
+/* If the screen is narrower than 16:10, scale based on Width */
+@media (max-aspect-ratio: 16/10) {
+    :root {
+        --base-size: 0.625vw;
+    }
+}
+
+/* If the screen is wider than 16:10, scale based on Height */
+@media (min-aspect-ratio: 16/10) {
+    :root {
+        --base-size: 1vh;
+    }
 }
 
 body {

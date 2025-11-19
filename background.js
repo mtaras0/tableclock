@@ -50,7 +50,6 @@ async function fetchUnsplashUrl() {
         h: IMAGE_HEIGHT,
         fit: 'crop',
         q: 80,
-        c: (new Date).getTime(), // Cache buster
     });
 
     try {
@@ -58,7 +57,8 @@ async function fetchUnsplashUrl() {
             headers: {
                 'Authorization': `Client-ID ${UNSPLASH_API_KEY}`,
                 'Accept-Version': 'v1'
-            }
+            },
+            cache: 'no-store' // Do not store in HTTP cache
         });
 
         if (!response.ok) {
