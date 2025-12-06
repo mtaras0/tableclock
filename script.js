@@ -200,7 +200,7 @@
         var now = new Date();
         var day = now.getDate();
         // var month = String(now.getMonth() + 1).padStart(2, '0');
-        var dotw = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][now.getDay()];
+        var dotw = ['ВСК', 'ПНД', 'ВТР', 'СРД', 'ЧТВ', 'ПТН', 'СБТ'][now.getDay()];
 
         document.getElementById('daydate').innerHTML = day;// + "." + month;
         document.getElementById('dotw').innerHTML = dotw;
