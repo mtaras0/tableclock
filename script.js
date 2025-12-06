@@ -27,9 +27,6 @@
         // Update date and day of week
         updateDate();
 
-        // Update weather information
-        updateWeather(); // <-- Added this line
-
         // Calculate milliseconds until the start of the next minute
         var seconds = now.getSeconds();
         var milliseconds = now.getMilliseconds();
@@ -230,6 +227,42 @@
         }, Math.max(50, msUntilMidnight));
     }
 
+    // --- Weather Update Scheduling ---
+    
+    function scheduleNextWeatherUpdate() {
+        const now = new Date();
+        // Targets: xx:00:30 and xx:30:30
+        // We need to find the next occurrence of either.
+        
+        // Define targets relative to current hour
+        const target1 = new Date(now);
+        target1.setMinutes(0, 30, 0);
+        
+        const target2 = new Date(now);
+        target2.setMinutes(30, 30, 0);
+        
+        const target3 = new Date(now);
+        target3.setHours(now.getHours() + 1, 0, 30, 0);
+        
+        let nextTarget;
+        
+        if (now < target1) {
+            nextTarget = target1;
+        } else if (now < target2) {
+            nextTarget = target2;
+        } else {
+            nextTarget = target3;
+        }
+        
+        const msUntilNext = nextTarget.getTime() - now.getTime();
+        console.log(`Next weather update scheduled for ${nextTarget.toLocaleTimeString()} (in ${Math.round(msUntilNext/1000)}s)`);
+        
+        setTimeout(function() {
+            updateWeather();
+            scheduleNextWeatherUpdate(); // Reschedule recursively
+        }, msUntilNext);
+    }
+
     // --- Initialization ---
     function initialize() {
         console.log("Initialization started.");
@@ -242,8 +275,9 @@
 
         // Set up periodic weather updates
         if (typeof updateWeather === 'function') {
-            // Update weather every 5 minutes (300000 milliseconds)
-            setInterval(updateWeather, 300000);
+            console.log("Initial weather update...");
+            updateWeather(); // Fire immediately on load
+            scheduleNextWeatherUpdate(); // Start the schedule
         } else {
             console.error('updateWeather function not found. Make sure weather.js is loaded correctly.');
         }

@@ -1,14 +1,15 @@
 // Path to the local weather data file
-const weatherDataUrl = 'weatherData.json';
+// const weatherDataUrl = 'weatherData.json'; // No longer used
 
 async function updateWeather() {
     try {
-        // Add a cache-busting query parameter to prevent stale data
-        const response = await fetch(`${weatherDataUrl}?t=${new Date().getTime()}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        console.log("Updating weather...");
+        // Fetch weather data directly using the new logic
+        const data = await getTabletClockWeather();
+        
+        if (!data) {
+            throw new Error("Failed to get weather data from getTabletClockWeather");
         }
-        const data = await response.json();
 
         // Update weather-now elements
         const nowTemp = data.now.temp;

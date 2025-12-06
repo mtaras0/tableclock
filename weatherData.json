@@ -1,8 +1,8 @@
 {
     "now": {
-        "temp": 6,
-        "icon": "rain_low_unlikely.png",
+        "temp": 8,
+        "icon": "clouds_full.png",
         "uvi": 0.0
     },
-    "next": "<span style=\"color: var(--accent-color);\">01:</span>&#8201;<span class=\"arrow-symbol rain-change-symbol\">\u2198</span><img src=\"icons/clouds_full.png\" class=\"weather-icon\" style=\"display: inline;\">"
+    "next": "<span style=\"color: var(--accent-color);\">08:</span>&#8201;<span class=\"arrow-symbol\">\u2193</span>5\u00b0"
 }
