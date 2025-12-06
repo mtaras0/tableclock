@@ -1,8 +1,0 @@
-{
-    "now": {
-        "temp": 8,
-        "icon": "clouds_full.png",
-        "uvi": 0.0
-    },
-    "next": "<span style=\"color: var(--accent-color);\">08:</span>&#8201;<span class=\"arrow-symbol\">\u2193</span>5\u00b0"
-}
