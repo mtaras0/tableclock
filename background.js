@@ -15,15 +15,14 @@ let nextTintColor = [...finalTintColor]; // Initialize with current/default
 let nextAccentColor = [...finalAccentColor]; // Initialize with current/default
 let nextTextColor = finalTextColor; // Initialize with current/default
 
-// --- Constants (Copied from unsplash.js for preloadBackground) ---
-const UNSPLASH_API_KEY = 'b1aba212129c0b620676e76d3a0e8941a5323a667e818f98af77942b54527077'; // Consider moving API Key
-const UNSPLASH_API_URL = 'https://api.unsplash.com/photos/random';
+// --- Constants ---
+// UNSPLASH_API_KEY is now handled by Cloudflare Worker
+const UNSPLASH_API_URL = 'https://unsplash-random.mukintaras.workers.dev';
 const IMAGE_WIDTH = 1280;
 const IMAGE_HEIGHT = 800;
 
 
-// --- Unsplash API Fetching & Image Preloading (Copied from unsplash.js) ---
-// TODO: Refactor later to avoid duplication if possible
+// --- Unsplash API Fetching & Image Preloading ---
 function preloadImage(url) {
     console.log("Preloading image:", url);
     return new Promise((resolve, reject) => {
@@ -41,7 +40,7 @@ function preloadImage(url) {
 }
 
 async function fetchUnsplashUrl() {
-    console.log("Fetching new background image URL...");
+    console.log("Fetching new background image URL from worker...");
     const params = new URLSearchParams({
         orientation: 'landscape',
         collections: '317099',
@@ -50,34 +49,31 @@ async function fetchUnsplashUrl() {
         h: IMAGE_HEIGHT,
         fit: 'crop',
         q: 80,
+        // No longer need cache-buster as worker handles fresh data and API key
     });
 
     try {
-        const response = await fetch(`${UNSPLASH_API_URL}?${params}`, {
-            headers: {
-                'Authorization': `Client-ID ${UNSPLASH_API_KEY}`,
-                'Accept-Version': 'v1'
-            },
-            cache: 'no-store' // Do not store in HTTP cache
-        });
+        // Fetch from Cloudflare Worker
+        const response = await fetch(`${UNSPLASH_API_URL}?${params}`);
 
         if (!response.ok) {
-            console.error('Unsplash API Error:', response.status, await response.text());
-            throw new Error(`Failed to fetch image URL (${response.status})`);
+            console.error('Cloudflare Worker Error:', response.status, await response.text());
+            throw new Error(`Failed to fetch image URL from worker (${response.status})`);
         }
 
         const data = await response.json();
         if (!data || !data.urls || !data.urls.raw) {
-            console.error('Invalid data received from Unsplash:', data);
-            throw new Error('Invalid data received from Unsplash');
+            console.error('Invalid data received from Worker/Unsplash:', data);
+            throw new Error('Invalid data received from Worker/Unsplash');
         }
 
         // Construct the final URL with specific dimensions and crop parameters
+        // The worker is expected to return the raw Unsplash response, so we extract the raw URL
         const finalUrl = `${data.urls.raw}&w=${IMAGE_WIDTH}&h=${IMAGE_HEIGHT}&fit=crop&q=80&auto=format`;
         return finalUrl;
 
     } catch (error) {
-        console.error('Error fetching Unsplash photo URL:', error);
+        console.error('Error fetching Unsplash photo URL via worker:', error);
         throw error; // Re-throw to be caught by caller
     }
 }
