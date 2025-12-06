@@ -99,7 +99,7 @@ function isNightTime(dateToCheck) {
     const futureHour = futureTime.getHours();
 
     // Night hours: 11 PM (23) or 0 AM to 5 AM (0-5)
-    const isNight = futureHour === 23 || (futureHour >= 0 && futureHour <= 5);
+    const isNight = futureHour === 23 || (futureHour >= 0 && futureHour <= 7);
     console.log(`Checking night time for ${futureTime.toLocaleTimeString()}: hour=${futureHour}, isNight=${isNight}`);
     return isNight;
 }
