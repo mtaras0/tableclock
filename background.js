@@ -297,8 +297,18 @@ function swapBackground() {
         console.log("--rain-color:", cssRainColor);
         document.documentElement.style.setProperty('--rain-color', cssRainColor);
 
-        // 4. Add/Remove night-tint class to weather icon (handled by updateWeather)
-
+        // 4. Apply Night Mode class to Weather container
+        // This allows CSS to handle icon dimming automatically, regardless of weather updates
+        const weatherContainer = document.getElementById('weather');
+        if (weatherContainer) {
+            if (nextBackgroundUrl === null) { // Null URL indicates Night Mode
+                console.log("Adding night-mode class to weather container");
+                weatherContainer.classList.add('night-mode');
+            } else {
+                console.log("Removing night-mode class from weather container");
+                weatherContainer.classList.remove('night-mode');
+            }
+        }
 
         // 5. Update Current Global Colors to Match Applied State
         // Use deep copy for arrays to avoid reference issues
