@@ -264,6 +264,10 @@ function determineNext(current, forecast) {
 // Modified to accept lat and lon
 async function _fetchWeatherFromAPI(lat, lon) {
     const WEATHER_API_URL = `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}`;
+    
+    // DEBUG: Log the full request URL
+    console.log("DEBUG - Weather Request URL:", WEATHER_API_URL);
+
     // 1. Fetch Data
     let apiData;
     try {
@@ -277,6 +281,10 @@ async function _fetchWeatherFromAPI(lat, lon) {
             return null;
         }
         apiData = await response.json();
+        
+        // DEBUG: Log the raw response from the API
+        console.log("DEBUG - Raw API Response:", apiData);
+        
     } catch (e) {
         console.error(`An unexpected error occurred during fetch: ${e}`);
         return null;
@@ -383,6 +391,9 @@ async function _fetchWeatherFromAPI(lat, lon) {
         }
 
         const weatherData = { "current": currentData, "forecast": forecastData };
+        
+        // DEBUG: Log the internal forecast data structure
+        console.log("DEBUG - Internal Weather Data:", weatherData);
 
         // 4. Analyze (Determine Next)
         const nextEvent = determineNext(currentData, forecastData);
