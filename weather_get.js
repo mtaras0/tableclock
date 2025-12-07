@@ -343,7 +343,7 @@ async function _fetchWeatherFromAPI(lat, lon) {
         const forecastData = {};
         forecastKeys.forEach(k => forecastData[k] = []);
 
-        for (let i = 1; i < timeseries.length; i++) {
+        for (let i = 1; i < Math.min(timeseries.length, 19); i++) {
             const entry = timeseries[i];
             const dtLocal = new Date(entry.time);
             
