@@ -40,20 +40,6 @@ async function updateWeather() {
         const nextLineElement = document.getElementById('weather-next');
         nextLineElement.innerHTML = nextLine
 
-        // Apply night tint if necessary, based on the global theme color
-        if (typeof finalTintColor !== 'undefined') {
-            const isNight = finalTintColor === 'black';
-            const allIcons = [nowIconElement, ...nextLineElement.querySelectorAll('.weather-icon')];
-
-            allIcons.forEach(icon => {
-                if (isNight) {
-                    icon.classList.add('night-tint');
-                } else {
-                    icon.classList.remove('night-tint');
-                }
-            });
-        }
-
     } catch (error) {
         console.error('Error fetching or processing local weather data:', error);
     }

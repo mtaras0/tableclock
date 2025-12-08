@@ -301,6 +301,8 @@ body {
     line-height: 0.75em;
 } */
 
-.night-tint {
+/* Night mode filtering for weather icons */
+#weather.night-mode .weather-icon img,
+#weather.night-mode img.weather-icon {
     filter: brightness(0.11) sepia(1) hue-rotate(-45deg) saturate(600%);
 }
